@@ -1,49 +1,68 @@
-## Switch-PokémonAutoBreeder
-Proof-of-Concept Fightstick for the Nintendo Switch, modified to run a script that repeatedly gets eggs from nursery and cycles around to hatch them.
+## Switch-PokémonSwShAutoBreeder
 
-Uses the LUFA library and reverse-engineering of the Pokken Tournament Pro Pad for the Wii U to enable custom fightsticks on the Switch System v3.0.0
+Modified from the Proof-of-Concept Fightstick for the Nintendo Switch by [progmem](https://github.com/progmem/Switch-Fightstick) and Splatoon printer by [shinyquagsire23](https://github.com/shinyquagsire23/Switch-Fightstick)
 
-### Video
+Uses the LUFA library and reverse-engineering of the Pokken Tournament Pro Pad for the Wii U to enable custom fightsticks on the Switch System.
 
-[![Link to Youtube Demo](https://img.youtube.com/vi/kS9kI8U9x9E/0.jpg)](https://www.youtube.com/watch?v=kS9kI8U9x9E)
+This script gathers eggs from the nursery on Route 5 and hatches them one box at a time. It has only been tested on Arduino UNO R3 in the English/Japanese/Korean versions of Pokémon Sword & Shield.
 
-### How to Use it?
+Be sure to correctly define the `settings.h` file (explained below), and follow the prerequisites prior to beginning the process.
+ 
+### Before Flashing
 
-After compiling and flashing onto the micro-controller, you can just plug the micro-controller into the Nintendo switch, using a USB Type-A to Type-C converter if necessary. The script will start to run automatically. Before plugging it in, however, you need to make sure the following requirements are met:
+Before flashing to the Arduino, you will need to check two files: `makefile` and `settings.h`. 
 
-- You are currently at the Nursery at the Bridge Field in Wild Area.  
+#### Edit `makefile`
+Follow the instructions from [shinyquagsire23's Splatoon printer](https://github.com/shinyquagsire23/Switch-Fightstick) for the `makefile`. 
 
-- You have all six slots on your party filled with Pokémons, not eggs. The first one can be a Pokémon with Flame Body ability, and the script will never switch out the Pokémon on the first slot.
+A quick recap: 
 
-- On the options page, make sure you set text speed to fast, send to boxes to manual, and vertical camera control to regular. 
+- Inside the `makefile`, make sure the `LUFA_PATH` points to the `LUFA` subdirectory inside your `LUFA` directory. 
 
-- On the menu, you should make sure that the cursor is on the Town Map icon. So when you press X button, it automatically lands on Town Map. The script will assume that by simply pressing X, and several A, it will fly to the Bridge Field in front of the Nursery NPC. 
+- Edit the setting `MCU = atmega16u2` if necessary.
+
+#### Edit `settings.h` 
+
+- Define `nat_dex_number` using the National Pokédex number of the Pokémon species you are hatching. The script will look up the dex value to provide the correct egg cycles and hatching time (e.g. a value of `810` for Grookey).
+
+- Define `number_of_boxes` for how many boxes of eggs you want to hatch. Note that there will likely be a difference of eggs due to the RNG nature of egg collection. 
+
+- Define `save` if you would like the script to save for you. Use this at your own risk.
+	- `0` = Don't save at all
+	- `1` = Save after every box
+	- `2` = Save at end of all boxes
+
+- Define `flame_body` for whether or not your starting Pokémon in your party will shorten the hatch time:
+	- `1` = Pokémon with Flame Body, Steam Engine, or Magma Armor ability in the first slot
+	- `0` = Different Pokémon in the first slot
+
+- The `intial_egg_check` is for how many attempts the script will do to collect for the first round of hatching. The rate at which the two Pokémon create eggs is RNG based on a few different factors which you can read about [here](https://bulbapedia.bulbagarden.net/wiki/Oval_Charm). Assuming about 80% chance for most use cases (Oval Charm, different species/OT), `46` attempts has a roughly 99.4% chance of obtaining 30+ eggs. The script will still work even if it gets less than 30 eggs.
+
+- The `subsequent_egg_check` is similar to the `initial_egg_check` but for subsequent rounds of egg collecting. Assuming the initial round created some overflow of eggs, this # can stand to be lower. `38` attempts has a roughly 65.5% chance of obtaining 30+ eggs.
+
+### Before Starting the Bot
+
+There is some small setup in game that must be done prior to starting the box.
+
+Confirm in Options you have the following settings:
+
+- Text Speed: Fast
+- Send to Boxes: Automatic
+- Give Nicknames: Don't give
+
+In the Pokémon menu, make sure:
+
+- Your party is completely full.
+- You have the required # of empty boxes going left to right.
+- Your last box used is the first empty box where you want your eggs (so collected eggs will default to this box first).
+- The rightmost column in the previous box (before the first empty box) is completely empty. Your first party members will get put here once egg hatching begins.
+
+Also ensure that: 
+
+- When you open up the main Menu by pressing [X], the cursor should hover over Pokémon.
+- You dropped off the parent species Pokémon at the Route 5 nursery, not the Wild Area one.
 
 
-### Wait, what?
-On June 20, 2017, Nintendo released System Update v3.0.0 for the Nintendo Switch. Along with a number of additional features that were advertised or noted in the changelog, additional hidden features were added. One of those features allows for the use of compatible USB controllers on the Nintendo Switch, such as the Pokken Tournament Pro Pad.
+### You're done!
 
-Unlike the Wii U, which handles these controllers on a 'per-game' basis, the Switch treats the Pokken controller as if it was a Switch Pro Controller. Along with having the icon for the Pro Controller, it functions just like it in terms of using it in other games, apart from the lack of physical controls such as analog sticks, the buttons for the stick clicks, or other system buttons such as Home or Capture.
-
-#### Compiling and Flashing onto the Teensy 2.0++
-Go to the Teensy website and download/install the [Teensy Loader application](https://www.pjrc.com/teensy/loader.html). For Linux, follow their instructions for installing the [GCC Compiler and Tools](https://www.pjrc.com/teensy/gcc.html). For Windows, you will need the [latest AVR toolchain](http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx) from the Atmel site. See [this issue](https://github.com/LightningStalker/Splatmeme-Printer/issues/10) and [this thread](http://gbatemp.net/threads/how-to-use-shinyquagsires-splatoon-2-post-printer.479497/) on GBAtemp for more information. (Note for Mac users - the AVR MacPack is now called AVR CrossPack. If that does not work, you can try installing `avr-gcc` with `brew`.)
-
-Next, you need to grab the LUFA library. You can download it in a zipped folder at the bottom of [this page](http://www.fourwalledcubicle.com/LUFA.php). Unzip the folder, rename it `LUFA`, and place it where you like. Then, download or clone the contents of this repository onto your computer. Next, you'll need to make sure the `LUFA_PATH` inside of the `makefile` points to the `LUFA` subdirectory inside your `LUFA` directory. My `Switch-Fightstick` directory is in the same directory as my `LUFA` directory, so I set `LUFA_PATH = ../LUFA/LUFA`.
-
-Now you should be ready to rock. Open a terminal window in the `Switch-Fightstick` directory, type `make`, and hit enter to compile. If all goes well, the printout in the terminal will let you know it finished the build! Follow the directions on flashing `Joystick.hex` onto your Teensy, which can be found page where you downloaded the Teensy Loader application.
-
-#### Compiling and Flashing onto the Arduino UNO R3
-You will need to set your [Arduino in DFU mode](https://www.arduino.cc/en/Hacking/DFUProgramming8U2), and flash its USB controller. (Note for Mac users - try [brew](https://brew.sh/index_it.html) to install the dfu-programmer with `brew install dfu-programmer`.) Setting an Arduino UNO R3 in DFU mode is quite easy, all you need is a jumper (the boards come with the needed pins in place). Please note that once the board is flashed, you will need to flash it back with the original firmware to make it work again as a standard Arduino. To compile this project you will need the AVR GCC Compiler and Tools. (Again for Mac users - try brew, adding the [osx-cross/avr](osx-cross/avr) repository, all you need to do is to type `brew tap osx-cross/avr` and `brew install avr-gcc`.) Next, you need to grab the LUFA library: download and install it following the steps described for the Teensy 2.0++.
-
-Finally, open a terminal window in the `Switch-Fightstick` directory, edit the `makefile` setting `MCU = atmega16u2`, and compile by typing `make`. Follow the [DFU mode directions](https://www.arduino.cc/en/Hacking/DFUProgramming8U2) to flash `Joystick.hex` onto your Arduino UNO R3 and you are done.
-
-#### Compiling and Flashing onto the Arduino Micro
-The Arduino Micro is more like the Teensy in that it has a single microcontroller that communicates directly over USB. Most of the steps are the same as those for the Teensy, except do not download Teensy Loader program. You will also need to edit `makefile` before issuing `make`. Change `MCU = at90usb1286` on line 15 to `MCU = atmega32u4`.
-
-Once finished building, start up Arduino IDE. Under `File -> Preferences`, check `Show verbose output during: upload` and pick OK. With the Arduino plugged in and properly selected under `Tools`, upload any sketch. Find the line with `avrdude` and copy the entire `avrdude` command and all options into a terminal, replacing the `.hex` file and path to the location of the `Joystick.hex` created in the previous step. Also make sure the `-P/dev/??` port is the same as what Arduino IDE is currently reporting. Now double tap the reset button on the Arduino and quickly press Enter in the terminal. This may take several tries. You may need to press Enter first and then the reset button or try various timings. Eventually, `avrdude` should report success. Store the `avrdude` command in a text file or somewhere safe since you will need it every time you want to print a new image.
-
-Sometimes, the Arduino will show up under a different port, so you may need to run Arduino IDE again to see the current port of your Micro.
-
-If you ever need to use your Arduino Micro with Arduino IDE again, the process is somewhat similar. Upload your sketch in the usual way and double tap reset button on the Arduino. It may take several tries and various timings, but should eventually be successful.
-
-The Arduino Leonardo is theoretically compatible, but has not been tested. It also has the ATmega32u4, and is layed out somewhat similar to the Micro.
+After you've compiled and flashed the script and ensured the proper settings listed above, you may plug it into the Nintendo Switch and the bot will start to run automatically. Good luck!

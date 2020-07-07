@@ -82,7 +82,9 @@ typedef enum {
 #define HAT_CENTER       0x08
 
 #define STICK_MIN      0
+#define STICK_96	  96
 #define STICK_CENTER 128
+#define STICK_160 	 160
 #define STICK_MAX    255
 
 // Joystick HID report structure. We have an input and an output.

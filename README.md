@@ -1,4 +1,4 @@
-## Switch-PokémonSwShAutoBreeder
+## Switch-SwShEggCollectorHatcher
 
 ![Screenshot of Auto Hatching](https://i.imgur.com/aUhhTv3.png)
 

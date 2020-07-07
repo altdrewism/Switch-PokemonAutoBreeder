@@ -1,6 +1,8 @@
 ## Switch-PokémonSwShAutoBreeder
 
-Modified from the Proof-of-Concept Fightstick for the Nintendo Switch by [progmem](https://github.com/progmem/Switch-Fightstick) and Splatoon printer by [shinyquagsire23](https://github.com/shinyquagsire23/Switch-Fightstick)
+![Screenshot of Auto Hatching](https://i.imgur.com/aUhhTv3.png)
+
+Modified from the Proof-of-Concept Fightstick for the Nintendo Switch by [progmem](https://github.com/progmem/Switch-Fightstick), Splatoon printer by [shinyquagsire23](https://github.com/shinyquagsire23/Switch-Fightstick), and Pokemon Auto Breeder by [patina27](https://github.com/patina27/Switch-PokemonAutoBreeder).
 
 Uses the LUFA library and reverse-engineering of the Pokken Tournament Pro Pad for the Wii U to enable custom fightsticks on the Switch System.
 

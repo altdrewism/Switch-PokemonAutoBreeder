@@ -4,6 +4,8 @@
 
 Modified from the Proof-of-Concept Fightstick for the Nintendo Switch by [progmem](https://github.com/progmem/Switch-Fightstick), Splatoon printer by [shinyquagsire23](https://github.com/shinyquagsire23/Switch-Fightstick), and Pokemon Auto Breeder by [patina27](https://github.com/patina27/Switch-PokemonAutoBreeder).
 
+Special thanks to Dancing_Alpacas for helping me design, test, and debug this project!
+
 Uses the LUFA library and reverse-engineering of the Pokken Tournament Pro Pad for the Wii U to enable custom fightsticks on the Switch System.
 
 This script gathers eggs from the nursery on Route 5 and hatches them one box at a time. It has only been tested on Arduino UNO R3 in the English/Japanese/Korean versions of Pokémon Sword & Shield.

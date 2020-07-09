@@ -88,7 +88,7 @@ static const command_t go_to_circle3[] = {
     { hang, 15 },
     { L_left_slight, 5 },
     { hang, 5 },
-    { L_left, 50 },
+    { L_left, 45 },
     { hang, 15 },
     { L_right_slight, 5},
     { hang, 5 }

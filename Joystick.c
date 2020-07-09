@@ -352,7 +352,7 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 			break;
 
 		case FLY_TO_NURSERY:
-			if (egg_set == 4) {
+			if (egg_set > 1) {
 				do_steps(fly_to_breading_steps, ARRAY_SIZE(fly_to_breading_steps), ReportData, GO_TO_CIRCLE3, 0);
 			}
 			else if (new_round) {
@@ -557,10 +557,7 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 				bufindex = 0;
 				//break;
 
-				if (egg_set == 4) {
-					state = FLY_TO_NURSERY;
-				}
-				else if (egg_set == 1) {
+				if (egg_set == 1) {
 					egg_count = subsequent_egg_checks;
 					num_boxes--;
 					
@@ -576,7 +573,7 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
 					}
 				}
 				else {
-					state = OPEN_BOX;
+					state = FLY_TO_NURSERY;
 				}
 			}
 

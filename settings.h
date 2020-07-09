@@ -1,7 +1,7 @@
 #ifndef _SETTINGS_H_
 #define _SETTINGS_H_
 
-#define nat_dex_number 001
+#define nat_dex_number 810
     // National Pokedex Number of what you're hatching
     // Determines the egg cycles and hatching time
 #define number_of_boxes 1

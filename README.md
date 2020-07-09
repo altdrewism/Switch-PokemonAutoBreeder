@@ -38,7 +38,7 @@ A quick recap:
 	- `1` = Pokémon with Flame Body, Steam Engine, or Magma Armor ability in the first slot
 	- `0` = Different Pokémon in the first slot
 
-- The `intial_egg_check` is for how many attempts the script will do to collect for the first round of hatching. The rate at which the two Pokémon create eggs is RNG based on a few different factors which you can read about [here](https://bulbapedia.bulbagarden.net/wiki/Oval_Charm). Assuming about 80% chance for most use cases (Oval Charm, different species/OT), `46` attempts has a roughly 99.4% chance of obtaining 30+ eggs. The script will still work even if it gets less than 30 eggs.
+- The `intial_egg_check` is for how many attempts the script will do to collect for the first round of hatching. The rate at which the two Pokémon create eggs is RNG based on a few different factors which you can read about [here](https://bulbapedia.bulbagarden.net/wiki/Oval_Charm). Assuming about 80% chance for most use cases (Oval Charm, different species/OT), `46` attempts has a roughly 99.4% chance of obtaining 30+ eggs. The script will still most likely work even if it gets less than 30 eggs.
 
 - The `subsequent_egg_check` is similar to the `initial_egg_check` but for subsequent rounds of egg collecting. Assuming the initial round created some overflow of eggs, this # can stand to be lower. `38` attempts has a roughly 65.5% chance of obtaining 30+ eggs.
 
@@ -63,6 +63,7 @@ Also ensure that:
 
 - When you open up the main Menu by pressing [X], the cursor should hover over Pokémon.
 - You dropped off the parent species Pokémon at the Route 5 nursery, not the Wild Area one.
+- You have some excess box storage for any overflow of eggs.
 
 
 ### You're done!

@@ -49,9 +49,9 @@ static const command_t fly_to_breading_steps[] = {
     { press_plus, 5 },
     { hang, 90 },
     { L_up_right_slight, 2 },
-    { hang, 5 },
+    { hang, 10 },
     { press_a, 5 },
-    { hang, 25 },
+    { hang, 35 },
     { press_a, 5 },
     { hang, 90 }
 };
